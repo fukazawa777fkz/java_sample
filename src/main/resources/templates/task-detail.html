@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク詳細</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h2>タスク詳細</h2>
+
+<!-- ------------タスク詳細---------------- -->
+<table class="detail-table" th:object="${taskDetail}">
+	<tr>
+		<td class="guide">【タスクID】</td>
+		<td th:text="*{taskId}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【タスク名】</td>
+		<td th:text="*{taskName}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【期限】</td>
+		<td th:text="*{limitDate}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【ステータス】</td>
+		<td th:text="*{status.statusCode + ':' + status.statusName}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【備考】</td>
+		<td th:text="*{remarks}"></td>
+	</tr>
+</table>
+<form th:action="@{/task-show-edit}" method="POST" th:object="${taskDetail}">
+	<input type="hidden" th:field="*{taskId}">
+	<input type="hidden" th:field="*{taskName}">
+	<input type="hidden" th:field="*{limitDate}">
+	<input type="hidden" name="statusCode" th:value="*{status.statusCode}">
+	<input type="hidden" th:field="*{remarks}">
+	<input type="submit" value="編集" class="btn">
+</form>
+<br>
+
+<!-- ------------メモ一覧---------------- -->
+<div th:if="${taskDetail.memoList.size()} != 0">
+
+	<table class="memo-list">
+		<tr>
+			<th>削除</th>
+			<th>メモID</th><th>メモ</th>
+		</tr>
+
+		<tr th:each="memo : ${taskDetail.memoList}">
+			<td>
+				<form th:action="@{/memo-remove}" method="POST">
+					<input type="hidden" name="taskId" th:value="${memo.taskId}">
+					<input type="hidden" name="memoId" th:value="${memo.memoId}">
+					<input type="hidden" name="memo"   th:value="${memo.memo}">
+					<input type="submit" value="削除" class="tbtn">
+				</form>
+			</td>
+			<td th:text="${memo.memoId}"></td>
+			<td th:text="${memo.memo}"></td>
+		</tr>
+
+	</table>
+
+</div>
+
+<!-- ------------メモ登録へ---------------- -->
+<form th:action="@{/memo-show-regist}" method="POST" th:object="${taskDetail}">
+	<input type="hidden" th:field="*{taskId}">
+	<input type="submit" value="メモ登録" class="btn">
+</form>
+<br>
+<a th:href="@{/top}">トップページに戻る</a>
+
+</body>
+</html>

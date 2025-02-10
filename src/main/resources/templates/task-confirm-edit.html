@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク編集確認</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+		
+<h2>タスク編集確認</h2>
+
+<table class="detail-table" th:object="${taskEditForm}">
+	<tr>
+		<td class="guide">【タスクID】</td>
+		<td th:text="*{taskId}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【タスク名】</td>
+		<td th:text="*{taskName}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【期限】</td>
+		<td th:text="*{limitDate}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【ステータス】</td>
+		<td th:text="*{statusCode + ':' + statusName}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【備考】</td>
+		<td th:text="*{remarks}"></td>
+	</tr>
+</table>
+<br>
+
+<form th:action="@{/task-confirm-edit}" method="POST" 
+		th:object="${taskEditForm}">
+    <input type="hidden" th:field="*{taskId}">
+    <input type="hidden" th:field="*{taskName}">
+    <input type="hidden" th:field="*{limitDate}">
+    <input type="hidden" th:field="*{statusCode}">
+    <input type="hidden" th:field="*{remarks}">
+    <input type="submit" value="更新実行" class="btn">
+</form>
+
+<form th:action="@{/task-show-edit}" method="POST"
+		th:object="${taskEditForm}">
+    <input type="hidden" th:field="*{taskId}">
+    <input type="hidden" th:field="*{taskName}">
+    <input type="hidden" th:field="*{limitDate}">
+    <input type="hidden" th:field="*{statusCode}">
+    <input type="hidden" th:field="*{remarks}">
+   	<input type="submit" value="もどる" class="btn">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>完了</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+		
+<h2>完了</h2>
+
+<br>
+<p>処理が完了しました。</p>
+<p th:text="${msg}"></p>
+<br>
+<br>
+
+<form th:action="@{/task-search-detail}" method="POST">
+	<input type="hidden" name="taskId" th:value="${taskId}" >
+   	<input type="submit" value="タスク詳細にもどる" class="btn">
+</form>
+<br>
+<br>
+
+<a th:href="@{/top}">トップページに戻る</a>
+
+</body>
+</html>

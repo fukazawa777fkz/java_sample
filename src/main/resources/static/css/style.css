@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+body {
+	font-family: BIZ UDPゴシック;
+	background-color: #98fb98;
+	text-align: center;
+}
+
+h1 {
+	font-size: 32px;
+    color: green;
+}
+
+h2 {
+	font-size: 28px;
+	background-color: green;
+	color: white;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+/* 通常のボタン */
+.btn {
+	border: 2px solid green;
+	padding: 4px 20px;
+	font-size: 20px;
+	color: green;
+	cursor:pointer;
+}
+
+.btn:hover {
+  color: #fff;
+  background: green;
+}
+
+table {
+	border: 1px solid #5e696c;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%; 					/* テーブル横幅 */
+	border-collapse:  collapse; 	/* 境界線を共有 */
+}
+
+th {
+	border: 1px solid #5e696c;
+    text-align:center;
+    background-color: #3cb371;
+    height: 32px;
+}
+
+td {
+	border: 1px solid #5e696c;
+	text-align: center;
+	height: 24px;
+}
+
+.task-list {
+    background-color: #eee8aa;
+}
+
+/* 詳細テーブル用 */
+.detail-table {
+    background-color: lavender;
+	width: 60%; 					/* テーブル横幅 */
+}
+
+.detail-table .guide {
+	width: 30%; 					/* テーブル横幅 */
+    background-color: lightgray;
+	text-align: center;
+}
+
+.detail-table td {
+    text-align:left;
+}
+
+/* 長い入力の幅 */
+input.long {
+	width: 300px;
+}
+
+.error-msg {
+    color: red;
+}
+
+.condition-table {
+    background-color: khaki;
+}
+
+.tbtn {
+	border: 2px solid steelblue;
+	padding: 2px 10px;
+	font-size: 16px;
+	color: steelblue;
+	cursor:pointer;
+}
+
+.tbtn:hover {
+  color: #fff;
+  background: steelblue;
+}
+
+.memo-list {
+    background-color: #afeeee;
+	width: 60%; 					/* テーブル横幅 */
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>メモ登録確認</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+		
+<h2>メモ登録確認</h2>
+
+<table class="detail-table" th:object="${memoRegistForm}">
+	<tr>
+		<td class="guide">【タスクID】</td>
+		<td th:text="*{taskId}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【メモ】</td>
+		<td th:text="*{memo}"></td>
+	</tr>
+</table>
+<br>
+
+<form th:action="@{/memo-confirm-regist}" method="POST" 
+		th:object="${memoRegistForm}">
+    <input type="hidden" th:field="*{taskId}">
+    <input type="hidden" th:field="*{memo}">
+    <input type="submit" value="登録実行" class="btn">
+</form>
+
+<form th:action="@{/memo-show-regist}" method="POST"
+		th:object="${memoRegistForm}">
+    <input type="hidden" th:field="*{taskId}">
+    <input type="hidden" th:field="*{memo}">
+   	<input type="submit" value="もどる" class="btn">
+</form>
+
+</body>
+</html>

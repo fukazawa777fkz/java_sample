@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク登録</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h2>タスク登録</h2>
+
+<form th:action="@{/task-regist}" method="POST" th:object="${taskRegistForm}">
+
+<table class="detail-table">
+	<tr>
+		<td class="guide">【タスク名】</td>
+		<td>
+		   	<input type="text" th:field="*{taskName}"><br>
+		   	<div th:if="${#fields.hasErrors('taskName')}" th:errors="*{taskName}" class="error-msg"></div>
+		</td>
+	</tr>
+	<tr>
+		<td class="guide">【期限】</td>
+		<td>
+		   	<input type="date" th:field="*{limitDate}"><br>
+		   	<div th:if="${#fields.hasErrors('limitDate')}" th:errors="*{limitDate}" class="error-msg"></div>
+		</td>
+	</tr>
+	<tr>
+		<td class="guide">【ステータス】</td>
+		<td>
+		   	<select th:field="*{statusCode}">
+				<option th:each="status : ${statusList}" 
+					th:value="${status.statusCode}" 
+					th:text="${status.statusCode + ':' + status.statusName}"
+					th:selected="${status.statusCode == statusCode}" >
+				</option>
+			</select>
+		   	<div th:if="${#fields.hasErrors('statusCode')}" th:errors="*{statusCode}" class="error-msg"></div>
+		</td>
+	</tr>
+	<tr>
+		<td class="guide">【備考】</td>
+		<td>
+		   	<input type="text" th:field="*{remarks}" class="long"><br>
+		   	<div th:if="${#fields.hasErrors('remarks')}" th:errors="*{remarks}" class="error-msg"></div>
+		</td>
+	</tr>
+</table>
+
+<input type="submit" value="登録" class="btn">
+
+</form>
+
+<br>
+<a th:href="@{/top}">トップページに戻る</a>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.taskmate.repository.TaskRepository">
+
+	<!-- **************** 一覧全件検索 **************** -->
+	<!-- resultMap（１対１の関係を含む） -->
+	<resultMap id="taskList"
+		type="com.example.taskmate.entity.TaskSummary">
+		<id property="taskId" column="task_id" />
+		<result property="taskName" column="task_name" />
+		<result property="limitDate" column="limit_date" />
+		<result property="memoCnt" column="memo_cnt" />
+		<association property="status" javaType="com.example.taskmate.entity.Status">
+			<id property="statusCode" column="status_code" />
+			<result property="statusName" column="status_name" />
+		</association>
+	</resultMap>
+	<!-- 一覧検索 -->
+	<select id="selectListAll"
+			resultMap="taskList">
+		SELECT tt.task_id, task_name, limit_date, 
+			   ms.status_code, ms.status_name, 
+		  COUNT(tm.memo_id) memo_cnt
+		FROM t_task tt
+		INNER JOIN m_status ms 
+		  ON tt.status_code = ms.status_code
+		LEFT OUTER JOIN t_memo tm
+  		  ON tt.task_id = tm.task_id
+	  GROUP BY tt.task_id, task_name, limit_date, 
+		  ms.status_code, ms.status_name
+	  ORDER BY tt.task_id
+	</select>
+	
+	<!-- **************** 登録 **************** -->
+	<insert id="insert">
+		INSERT INTO t_task ( task_name, limit_date, status_code, remarks )
+		VALUES ( #{task.taskName}, #{task.limitDate}, 
+				 #{task.statusCode}, #{task.remarks} )
+	</insert>
+
+	<!-- **************** 一覧条件検索 **************** -->
+	<select id="selectListByConditions"
+			resultMap="taskList">
+		SELECT tt.task_id, task_name, limit_date, 
+			   ms.status_code, ms.status_name, 
+		  COUNT(tm.memo_id) memo_cnt
+		FROM t_task tt
+		INNER JOIN m_status ms 
+		  ON tt.status_code = ms.status_code
+		LEFT OUTER JOIN t_memo tm
+  		  ON tt.task_id = tm.task_id
+  	    WHERE true
+	  	<if test="task.taskName != null">
+		  AND task_name LIKE #{task.taskName}
+	  	</if>
+	  	<if test="task.limitDate != null">
+	  	<![CDATA[
+		  AND limit_date <= #{task.limitDate}
+		]]>  
+	  	</if>
+	  	<if test="task.statusCode != null">
+		  AND tt.status_code = #{task.statusCode}   
+	  	</if>
+	  GROUP BY tt.task_id, task_name, limit_date, 
+		  ms.status_code, ms.status_name
+	  ORDER BY tt.task_id
+	</select>
+
+	<!-- **************** 詳細検索（メモ一覧含む） **************** -->
+	<!-- １対１の関係 ＆ １対ｎの関係 -->
+	<resultMap type="com.example.taskmate.entity.TaskDetail" 
+			   id="taskDetail">
+		<id property="taskId" column="task_id" />
+		<result property="taskName" column="task_name" />
+		<result property="limitDate" column="limit_date" />
+		<result property="remarks" column="remarks" />
+		<association property="status" javaType="com.example.taskmate.entity.Status">
+			<id property="statusCode" column="status_code" />
+			<result property="statusName" column="status_name" />
+		</association>
+		<collection property="memoList" ofType="com.example.taskmate.entity.Memo">
+			<id property="memoId" column="memo_id" />
+			<result property="taskId" column="m_task_id" />
+			<result property="memo" column="memo" />
+		</collection>
+	</resultMap>
+	<!-- 詳細検索 -->
+	<select id="selectDetailByTaskId"
+			resultMap="taskDetail">
+		SELECT tt.task_id, task_name, limit_date, remarks, 
+			   ms.status_code, ms.status_name, 
+			   tm.memo_id, tm.task_id m_task_id, tm.memo 
+		  FROM t_task tt
+			   INNER JOIN m_status ms
+				  ON tt.status_code = ms.status_code
+			   LEFT OUTER JOIN t_memo tm
+							ON tt.task_id = tm.task_id
+		 WHERE tt.task_id = #{taskId}
+	  ORDER BY tm.memo_id
+	</select>
+
+	<!-- **************** 更新 **************** -->
+	<update id="update">
+		UPDATE
+		  t_task
+		SET
+		  task_name = #{task.taskName},
+		  limit_date  = #{task.limitDate}, 
+		  status_code = #{task.statusCode}, 
+		  remarks = #{task.remarks}
+		WHERE
+		  task_id = #{task.taskId}
+	</update>
+
+</mapper>

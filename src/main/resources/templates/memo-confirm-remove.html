@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>メモ削除確認</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+		
+<h2>メモ削除確認</h2>
+
+<table class="detail-table" th:object="${memoRemoveForm}">
+	<tr>
+		<td class="guide">【メモID】</td>
+		<td th:text="*{memoId}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【タスクID】</td>
+		<td th:text="*{taskId}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【メモ】</td>
+		<td th:text="*{memo}"></td>
+	</tr>
+</table>
+<br>
+
+<form th:action="@{/memo-confirm-remove}" method="POST" 
+		th:object="${memoRemoveForm}">
+    <input type="hidden" th:field="*{memoId}">
+    <input type="hidden" th:field="*{taskId}">
+    <input type="hidden" th:field="*{memo}">
+    <input type="submit" value="削除実行" class="btn">
+</form>
+
+<form th:action="@{/task-search-detail}" method="POST"
+		th:object="${memoRemoveForm}">
+    <input type="hidden" th:field="*{taskId}">
+   	<input type="submit" value="もどる" class="btn">
+</form>
+
+</body>
+</html>
