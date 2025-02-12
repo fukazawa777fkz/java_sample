@@ -35,7 +35,7 @@ public class TaskRegistController {
 		model.addAttribute("statusList", list);
 
 		// 登録画面へ
-		return "task-regist";
+		return "task-regist-view";
 	}
 
 	/*--- タスク登録リクエスト（登録画面より） ---*/
@@ -59,7 +59,7 @@ public class TaskRegistController {
 			List<Status> list = statusService.findAll();
 			model.addAttribute("statusList", list);
 
-			return "task-regist";
+			return "task-regist-view";
 		}
 		
 		// ステータ名を form に設定 (Model内)
@@ -85,7 +85,7 @@ public class TaskRegistController {
 			List<Status> statusList = statusService.findAll();
 			model.addAttribute("statusList", statusList);
 
-			return "task-regist";
+			return "task-regist-view";
 		}
 
 		// form -> entity へ
