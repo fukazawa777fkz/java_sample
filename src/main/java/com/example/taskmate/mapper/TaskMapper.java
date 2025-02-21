@@ -1,4 +1,4 @@
-package com.example.taskmate.repository;
+package com.example.taskmate.mapper;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import com.example.taskmate.entity.TaskDetail;
 import com.example.taskmate.entity.TaskSummary;
 
 @Mapper
-public interface TaskRepository {
+public interface TaskMapper {
 
 	// 一覧全件検索
 	List<TaskSummary> selectListAll();

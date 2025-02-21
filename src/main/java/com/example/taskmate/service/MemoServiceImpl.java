@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.taskmate.entity.Memo;
-import com.example.taskmate.repository.MemoRepository;
+import com.example.taskmate.mapper.MemoMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,13 +12,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemoServiceImpl implements MemoService {
 
-	private final MemoRepository memoRepository;
+	private final MemoMapper memoMapper;
 	
 	@Override
 	@Transactional
 	public void regist(Memo memo) {
 
-		memoRepository.insert(memo);
+		memoMapper.insert(memo);
 		
 	}
 
@@ -26,7 +26,7 @@ public class MemoServiceImpl implements MemoService {
 	@Transactional
 	public void remove(Integer memoId) {
 
-		memoRepository.delete(memoId);
+		memoMapper.delete(memoId);
 		
 	}
 

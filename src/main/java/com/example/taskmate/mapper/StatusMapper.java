@@ -1,4 +1,4 @@
-package com.example.taskmate.repository;
+package com.example.taskmate.mapper;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.example.taskmate.entity.Status;
 
 @Mapper
-public interface StatusRepository {
+public interface StatusMapper {
 
 	// 全件検索
 	List<Status> selectAll();

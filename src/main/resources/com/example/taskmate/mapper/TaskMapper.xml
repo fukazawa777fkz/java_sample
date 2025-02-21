@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.taskmate.repository.TaskRepository">
+<mapper namespace="com.example.taskmate.mapper.TaskMapper">
 
 	<!-- **************** 一覧全件検索 **************** -->
 	<!-- resultMap（１対１の関係を含む） -->

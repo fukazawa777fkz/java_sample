@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.taskmate.entity.Status;
-import com.example.taskmate.repository.StatusRepository;
+import com.example.taskmate.mapper.StatusMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,13 +14,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StatusServiceImpl implements StatusService {
 
-	private final StatusRepository statusRepository;
+	private final StatusMapper statusMapper;
 	
 	@Override
 	@Transactional(readOnly = true)	
 	public List<Status> findAll() {
 
-		List<Status> list = statusRepository.selectAll();
+		List<Status> list = statusMapper.selectAll();
 		
 		return list;
 	}
@@ -29,7 +29,7 @@ public class StatusServiceImpl implements StatusService {
 	@Transactional(readOnly = true)
 	public Status findByCode(String statusCode) {
 
-		Status status = statusRepository.selectByCode(statusCode);
+		Status status = statusMapper.selectByCode(statusCode);
 		
 		return status;
 	}

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.taskmate.entity.Task;
 import com.example.taskmate.entity.TaskDetail;
 import com.example.taskmate.entity.TaskSummary;
-import com.example.taskmate.repository.TaskRepository;
+import com.example.taskmate.mapper.TaskMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,13 +16,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
-	private final TaskRepository taskRepository;
+	private final TaskMapper taskMapper;
 	
 	@Override
 	@Transactional(readOnly = true)
 	public List<TaskSummary> findListAll() {
 
-		List<TaskSummary> list = taskRepository.selectListAll();
+		List<TaskSummary> list = taskMapper.selectListAll();
 		
 		return list;
 
@@ -32,7 +32,7 @@ public class TaskServiceImpl implements TaskService {
 	@Transactional
 	public void regist(Task task) {
 
-		taskRepository.insert(task);
+		taskMapper.insert(task);
 
 	}
 
@@ -40,7 +40,7 @@ public class TaskServiceImpl implements TaskService {
 	@Transactional(readOnly = true)
 	public List<TaskSummary> findListByConditions(Task task) {
 
-		List<TaskSummary> list = taskRepository.selectListByConditions(task);
+		List<TaskSummary> list = taskMapper.selectListByConditions(task);
 		
 		return list;
 	}
@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
 	@Transactional(readOnly = true)
 	public TaskDetail findDetailByTaskId(Integer taskId) {
 
-		TaskDetail taskDetail = taskRepository.selectDetailByTaskId(taskId);
+		TaskDetail taskDetail = taskMapper.selectDetailByTaskId(taskId);
 		
 		return taskDetail;
 
@@ -59,7 +59,7 @@ public class TaskServiceImpl implements TaskService {
 	@Transactional
 	public void edit(Task task) {
 
-		taskRepository.update(task);
+		taskMapper.update(task);
 		
 	}
 
