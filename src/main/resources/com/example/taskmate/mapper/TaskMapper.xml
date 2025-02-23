@@ -31,13 +31,6 @@
 	  ORDER BY tt.task_id
 	</select>
 	
-	<!-- **************** 登録 **************** -->
-	<insert id="insert">
-		INSERT INTO t_task ( task_name, limit_date, status_code, remarks )
-		VALUES ( #{task.taskName}, #{task.limitDate}, 
-				 #{task.statusCode}, #{task.remarks} )
-	</insert>
-
 	<!-- **************** 一覧条件検索 **************** -->
 	<select id="selectListByConditions"
 			resultMap="taskList">

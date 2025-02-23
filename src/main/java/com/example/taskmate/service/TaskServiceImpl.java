@@ -9,7 +9,6 @@ import com.example.taskmate.entity.TTask;
 import com.example.taskmate.entity.Task;
 import com.example.taskmate.entity.TaskDetail;
 import com.example.taskmate.entity.TaskSummary;
-import com.example.taskmate.mapper.TTaskMapper;
 import com.example.taskmate.mapper.TaskMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class TaskServiceImpl implements TaskService {
 
 	private final TaskMapper taskMapper;
-	private final TTaskMapper ttaskMapper;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -35,7 +33,7 @@ public class TaskServiceImpl implements TaskService {
 	@Transactional
 	public void regist(TTask task) {
 
-		ttaskMapper.insert(task);
+		taskMapper.insert(task);
 
 	}
 
