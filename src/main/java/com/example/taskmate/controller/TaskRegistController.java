@@ -2,6 +2,7 @@ package com.example.taskmate.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -89,11 +90,13 @@ public class TaskRegistController {
 		}
 
 		// form -> entity へ
-		TTask task = new TTask();
-		task.setTaskName(form.getTaskName());
-		task.setLimitDate(form.getLimitDate());
-		task.setStatusCode(form.getStatusCode());
-		task.setRemarks(form.getRemarks());
+		ModelMapper modelMapper = new ModelMapper();
+		TTask task = modelMapper.map(form, TTask.class);
+//		TTask task = new TTask();
+//		task.setTaskName(form.getTaskName());
+//		task.setLimitDate(form.getLimitDate());
+//		task.setStatusCode(form.getStatusCode());
+//		task.setRemarks(form.getRemarks());
 		
 		// 登録処理
 		taskService.regist(task);
