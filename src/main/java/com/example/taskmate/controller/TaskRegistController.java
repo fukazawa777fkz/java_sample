@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.taskmate.entity.Status;
-import com.example.taskmate.entity.Task;
+import com.example.taskmate.entity.TTask;
 import com.example.taskmate.form.TaskRegistForm;
 import com.example.taskmate.service.StatusService;
 import com.example.taskmate.service.TaskService;
@@ -89,7 +89,7 @@ public class TaskRegistController {
 		}
 
 		// form -> entity へ
-		Task task = new Task();
+		TTask task = new TTask();
 		task.setTaskName(form.getTaskName());
 		task.setLimitDate(form.getLimitDate());
 		task.setStatusCode(form.getStatusCode());
