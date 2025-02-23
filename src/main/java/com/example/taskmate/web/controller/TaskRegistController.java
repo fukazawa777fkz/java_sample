@@ -1,4 +1,4 @@
-package com.example.taskmate.controller;
+package com.example.taskmate.web.controller;
 
 import java.util.List;
 
