@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <!-- MySQLのJDBCドライバーの場所を指定 -->
+  <classPathEntry location="C:/Users/mfuka/.m2/repository/com/mysql/mysql-connector-j/9.1.0/mysql-connector-j-9.1.0.jar"/>
+  
+  <!-- コンテキスト設定: MyBatis3の機能を使用 -->
+  <context id="local" targetRuntime="MyBatis3">
+
+    <!-- 生成されるファイルから日付情報を除外 -->
+    <property name="suppressDate" value="true" />
+    <!-- MapperインターフェースにSpringの@Mapperアノテーションを追加 -->
+    <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin" />
+
+    <!-- 生成されるコードのコメント設定 -->
+    <commentGenerator>
+        <!-- 日付情報を除外 -->
+        <property name="suppressDate" value="true" />
+        <!-- すべてのコメントを抑制する場合はこちらを有効化 -->
+        <!-- <property name="suppressAllComments" value="true" /> -->
+    </commentGenerator>
+
+    <!-- データベース接続設定 -->
+    <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/task_db?useSSL=false&amp;nullCatalogMeansCurrent=true"
+        userId="task_user"
+        password="task">
+    </jdbcConnection>
+
+    <!-- エンティティクラスの生成設定 -->
+    <javaModelGenerator 
+        targetPackage="com.example.taskmate.entity" 
+        targetProject="gensrc/main/java">
+        <property name="enableSubPackages" value="true" />
+        <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <!-- SQLマッパーXMLファイルの生成設定 -->
+    <sqlMapGenerator 
+        targetPackage="resources.com.example.taskmate.mapper" 
+        targetProject="gensrc/main">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <!-- Mapperインターフェースの生成設定 -->
+    <javaClientGenerator 
+        type="XMLMAPPER" 
+        targetPackage="com.example.taskmate.mapper" 
+        targetProject="gensrc/main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <!-- 生成対象のテーブル設定 -->
+    <table schema="task_db" tableName="items">
+      <property name="useActualColumnNames" value="false" />                  <!-- カラム名をキャメルケースに変換 -->
+    </table>
+    <table schema="task_db" tableName="m_status">
+      <property name="useActualColumnNames" value="false" />                  <!-- カラム名をキャメルケースに変換 -->
+    </table>
+
+    <table schema="task_db" tableName="t_memo">
+      <property name="useActualColumnNames" value="false" />                  <!-- カラム名をキャメルケースに変換 -->
+      <generatedKey column="memo_id" sqlStatement="MYSQL" identity="true" />  <!-- 自動採番カラムの設定 -->
+    </table>
+    <table schema="task_db" tableName="t_task">
+      <property name="useActualColumnNames" value="false" />                  <!-- カラム名をキャメルケースに変換 -->
+      <generatedKey column="task_id" sqlStatement="MYSQL" identity="true" />  <!-- 自動採番カラムの設定 -->
+    </table>
+    
+  </context>
+</generatorConfiguration>
