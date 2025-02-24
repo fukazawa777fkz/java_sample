@@ -3,12 +3,15 @@ package com.example.taskmate.api.controller;
 import ch.qos.logback.core.util.StringUtil;
 import com.example.taskmate.api.exception.BadRequestException;
 import com.example.taskmate.api.request.TaskSearchRequest;
+import com.example.taskmate.api.response.ApiResponse;
 import com.example.taskmate.api.response.TaskListResponse;
 import com.example.taskmate.entity.Task;
+import com.example.taskmate.entity.TaskSummary;
 import com.example.taskmate.form.TaskSearchListForm;
 import com.example.taskmate.service.StatusService;
 import com.example.taskmate.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,7 @@ public class GetTaskListController {
 	
 	/*--- 一覧検索リクエスト -------------------------------*/
 	@PostMapping("/tasks-search")
-	public TaskListResponse searchTaskList(
+	public ResponseEntity<ApiResponse<TaskListResponse>> searchTaskList(
 			@Validated @RequestBody TaskSearchRequest request,
 			BindingResult result) {
 
@@ -42,8 +45,10 @@ public class GetTaskListController {
 		}
 
 		// 一覧の条件検索
-		TaskListResponse list = new TaskListResponse();
-		list.setTasks(taskService.findListByConditions(task));
-		return list;
+		TaskListResponse taskList = new TaskListResponse();
+		taskList.setTasks(taskService.findListByConditions(task));
+		ApiResponse<TaskListResponse> response = new ApiResponse<>(200, "Success", taskList);
+
+		return ResponseEntity.ok(response);
 	}
 }
