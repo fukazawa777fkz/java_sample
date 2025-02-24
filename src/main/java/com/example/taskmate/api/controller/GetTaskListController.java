@@ -3,20 +3,18 @@ package com.example.taskmate.api.controller;
 import ch.qos.logback.core.util.StringUtil;
 import com.example.taskmate.api.exception.BadRequestException;
 import com.example.taskmate.api.request.TaskSearchRequest;
-import com.example.taskmate.api.response.ApiResponse;
 import com.example.taskmate.api.response.TaskListResponse;
 import com.example.taskmate.entity.Task;
-import com.example.taskmate.entity.TaskSummary;
-import com.example.taskmate.form.TaskSearchListForm;
-import com.example.taskmate.service.StatusService;
 import com.example.taskmate.service.TaskService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks") // RESTfulな設計
@@ -24,11 +22,11 @@ import java.util.List;
 public class GetTaskListController {
 
 	private final TaskService taskService;
-	private final StatusService statusService;
 	
 	/*--- 一覧検索リクエスト -------------------------------*/
 	@PostMapping("/tasks-search")
-	public ResponseEntity<ApiResponse<TaskListResponse>> searchTaskList(
+	
+	public ResponseEntity<TaskListResponse> searchTaskList(
 			@Validated @RequestBody TaskSearchRequest request,
 			BindingResult result) {
 
@@ -47,8 +45,10 @@ public class GetTaskListController {
 		// 一覧の条件検索
 		TaskListResponse taskList = new TaskListResponse();
 		taskList.setTasks(taskService.findListByConditions(task));
-		ApiResponse<TaskListResponse> response = new ApiResponse<>(200, "Success", taskList);
 
-		return ResponseEntity.ok(response);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Connection", "Keep-Alive");
+		return new ResponseEntity<TaskListResponse>(taskList, headers, HttpStatus.OK);
+
 	}
 }

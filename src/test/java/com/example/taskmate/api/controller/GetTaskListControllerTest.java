@@ -1,7 +1,7 @@
 package com.example.taskmate.api.controller;
 
 import com.example.taskmate.api.request.TaskSearchRequest;
-import com.example.taskmate.api.response.ApiResponse;
+import com.example.taskmate.api.response.ApiErrorResponse;
 import com.example.taskmate.api.response.TaskListResponse;
 import com.example.taskmate.entity.Task;
 import com.example.taskmate.entity.TaskSummary;
@@ -23,12 +23,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -90,14 +87,14 @@ public class GetTaskListControllerTest {
 
         // レスポンスの内容を取得して検証
         String jsonResponse = result.getResponse().getContentAsString();
-        ApiResponse<TaskListResponse> apiResponse = objectMapper.readValue(jsonResponse, new TypeReference<ApiResponse<TaskListResponse>>() {});
+        ApiErrorResponse<TaskListResponse> apiResponse = objectMapper.readValue(jsonResponse, new TypeReference<ApiErrorResponse<TaskListResponse>>() {});
 
         // 期待値の確認
         assert apiResponse != null;
-        assert apiResponse.getStatusCode() == 200;
+        assert apiResponse.getStatus() == 200;
         assert "Success".equals(apiResponse.getMessage());
 
-        TaskListResponse taskListResponse = apiResponse.getData();
+        TaskListResponse taskListResponse = apiResponse.getDetails();
         assert taskListResponse != null;
         assert taskListResponse.getTasks().size() == 2;
         assert taskListResponse.getTasks().get(0).getTaskId() == 1;
