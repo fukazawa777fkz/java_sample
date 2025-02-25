@@ -87,14 +87,9 @@ public class GetTaskListControllerTest {
 
         // レスポンスの内容を取得して検証
         String jsonResponse = result.getResponse().getContentAsString();
-        ApiErrorResponse<TaskListResponse> apiResponse = objectMapper.readValue(jsonResponse, new TypeReference<ApiErrorResponse<TaskListResponse>>() {});
+        TaskListResponse taskListResponse = objectMapper.readValue(jsonResponse, TaskListResponse.class);
 
         // 期待値の確認
-        assert apiResponse != null;
-        assert apiResponse.getStatus() == 200;
-        assert "Success".equals(apiResponse.getMessage());
-
-        TaskListResponse taskListResponse = apiResponse.getDetails();
         assert taskListResponse != null;
         assert taskListResponse.getTasks().size() == 2;
         assert taskListResponse.getTasks().get(0).getTaskId() == 1;
